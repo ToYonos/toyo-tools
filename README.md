@@ -46,7 +46,12 @@ public class Foo
 	{
 		try
 		{
-			ConfigPropertyBinder.create(new PropertiesAdapter(new FileReader(new File("/path/to/config.properties"))), Foo.class).bind();
+			ConfigPropertyBinder.create(
+				new PropertiesAdapter(
+					new FileReader(new File("/path/to/config.properties"))
+				),
+				Foo.class
+			).bind();
 		}
 		catch (IOException e)
 		{
