@@ -1,44 +1,54 @@
 package info.toyonos;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-
-import info.toyonos.config.ConfigProperties;
-import info.toyonos.config.ConfigProperty;
 import info.toyonos.config.ConfigPropertyBinder;
 import info.toyonos.config.ConfigPropertyException;
 import info.toyonos.config.MissingConfigPropertyException;
-import info.toyonos.config.adapter.PropertiesAdapter;
 import info.toyonos.config.adapter.SimpleConfigPropertyAdapter;
 
-@RunWith(DataProviderRunner.class)
-@SuppressWarnings("unused")
+@TestMethodOrder(OrderAnnotation.class)
 public class ConfigPropertyBinderTest
-{
-	@DataProvider
-	public static Object[][] extractPropertiesTestDataProvider()
+{	
+	@Test
+    @Order(1)
+	public void unbindedTest() throws Exception
 	{
-		return new Object[][]
-		{
-			{ TestObject.class },
-			{ TestObjectNotFinal.class },
-		};  
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_S1"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_S2"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_S3"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_S4"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_S5"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_S6"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_S7"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_S8"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_L1"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_I1"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_B1"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_A1"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_A2"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_A3"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_A4"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_D1"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_D2"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_D3"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_D4"));
+		Assertions.assertNull(getFieldValue(TestObject.class, "A_B_D5"));
 	}
 
-	@UseDataProvider("extractPropertiesTestDataProvider")
-	@Test
+	@ParameterizedTest
+	@ValueSource(classes = {TestObject.class, TestObjectNotFinal.class})
+	@Order(2)
 	public void extractPropertiesTest(Class<?> target) throws Exception
 	{		
 		Map<String, String> config = new HashMap<>();
@@ -51,189 +61,93 @@ public class ConfigPropertyBinderTest
 		config.put("prefix.a.b.l1", "42");
 		config.put("prefix.a.b.i1", "5");
 		config.put("prefix.a.b.b1", "true");
-		config.put("prefix.a.b.a1", "a,b,c");
-		config.put("prefix.a.b.a2", "d; e; f ");
-		config.put("prefix.a.b.a3", "1,2,3");
-		config.put("prefix.a.b.a4", "4,5,6");
+		config.put("prefix.a.b.a1", "   a  ;b ;c ");
+		config.put("prefix.a.b.a2", "1;2;3");
+		config.put("prefix.a.b.a3", "1;2;3");
+		config.put("prefix.a.b.a4", "4;5;6");
+		config.put("prefix.a.b.d1", "5ms");
+		config.put("prefix.a.b.d2", "5s");
+		config.put("prefix.a.b.d3", "5m");
+		config.put("prefix.a.b.d4", "5h");
+		config.put("prefix.a.b.d5", "5d");
 
-		Assert.assertNull(target.getField("A_B_S1").get(null));
-		Assert.assertNull(target.getField("A_B_S2").get(null));
-		Assert.assertNull(target.getField("A_B_S3").get(null));
-		Assert.assertNull(target.getField("A_B_S4").get(null));
-		Assert.assertNull(target.getField("A_B_S5").get(null));
-		Assert.assertNull(target.getField("A_B_S6").get(null));
-		Assert.assertNull(target.getField("A_B_L1").get(null));
-		Assert.assertNull(target.getField("A_B_I1").get(null));
-		Assert.assertNull(target.getField("A_B_B1").get(null));
-		Assert.assertNull(target.getField("A_B_A1").get(null));
-		Assert.assertNull(target.getField("A_B_A2").get(null));
-		Assert.assertNull(target.getField("A_B_A3").get(null));
-		Assert.assertNull(target.getField("A_B_A4").get(null));
+		Assertions.assertNull(target.getField("A_B_S1").get(null));
+		Assertions.assertNull(target.getField("A_B_S2").get(null));
+		Assertions.assertNull(target.getField("A_B_S3").get(null));
+		Assertions.assertNull(target.getField("A_B_S4").get(null));
+		Assertions.assertNull(target.getField("A_B_S5").get(null));
+		Assertions.assertNull(target.getField("A_B_S6").get(null));
+		Assertions.assertNull(target.getField("A_B_L1").get(null));
+		Assertions.assertNull(target.getField("A_B_I1").get(null));
+		Assertions.assertNull(target.getField("A_B_B1").get(null));
+		Assertions.assertNull(target.getField("A_B_A1").get(null));
+		Assertions.assertNull(target.getField("A_B_A2").get(null));
+		Assertions.assertNull(target.getField("A_B_A3").get(null));
+		Assertions.assertNull(target.getField("A_B_A4").get(null));
 
 		ConfigPropertyBinder.create(new SimpleConfigPropertyAdapter(config), target).bind();
-
-		Assert.assertEquals("test1", target.getField("A_B_S1").get(null));
-		Assert.assertEquals("test2", target.getField("A_B_S2").get(null));
-		Assert.assertNull(target.getField("A_B_S3").get(null));
-		Assert.assertEquals("test4", target.getField("A_B_S4").get(null));
-		Assert.assertEquals("test5 default", target.getField("A_B_S5").get(null));
-		Assert.assertEquals("test6 default", target.getField("A_B_S6").get(null));
-		Assert.assertEquals("test7", target.getField("A_B_S7").get(null));
-		Assert.assertNull(target.getField("A_B_S8").get(null));
 		
-		Assert.assertEquals(Long.valueOf(42L), target.getField("A_B_L1").get(null));
-		Assert.assertEquals(Integer.valueOf(5), target.getField("A_B_I1").get(null));
-		Assert.assertTrue(Boolean.parseBoolean(target.getField("A_B_B1").get(null).toString()));
-		Assert.assertArrayEquals(new String[]{"a", "b", "c"}, (String[]) target.getField("A_B_A1").get(null));
-		Assert.assertArrayEquals(new String[]{"d", "e", "f"}, (String[]) target.getField("A_B_A2").get(null));
-		Assert.assertArrayEquals(new Integer[]{1, 2, 3}, (Integer[]) target.getField("A_B_A3").get(null));
-		Assert.assertArrayEquals(new long[]{4L, 5L, 6L}, (long[]) target.getField("A_B_A4").get(null));
+		Assertions.assertEquals("test1", getFieldValue(target, "A_B_S1"));
+		Assertions.assertEquals("test2", getFieldValue(target, "A_B_S2"));
+		Assertions.assertNull(getFieldValue(target, "A_B_S3"));
+		Assertions.assertEquals("test4", getFieldValue(target, "A_B_S4"));
+		Assertions.assertEquals("test5 default", getFieldValue(target, "A_B_S5"));
+		Assertions.assertEquals("test6 default", getFieldValue(target, "A_B_S6"));
+		Assertions.assertEquals("test7", getFieldValue(target, "A_B_S7"));
+		Assertions.assertNull(getFieldValue(target, "A_B_S8"));
+		
+		Assertions.assertEquals(Long.valueOf(42L), getFieldValue(target, "A_B_L1"));
+		Assertions.assertEquals(Integer.valueOf(5), getFieldValue(target, "A_B_I1"));
+		Assertions.assertEquals(Boolean.TRUE, getFieldValue(target, "A_B_B1"));
+		Assertions.assertArrayEquals(new String[]{"a", "b", "c"}, (String[]) getFieldValue(target, "A_B_A1"));
+		Assertions.assertArrayEquals(new String[]{"1", "2", "3"}, (String[]) getFieldValue(target, "A_B_A2"));
+		Assertions.assertArrayEquals(new Integer[]{1, 2, 3}, (Integer[]) getFieldValue(target, "A_B_A3"));
+		Assertions.assertArrayEquals(new long[]{4L, 5L, 6L}, (long[]) getFieldValue(target, "A_B_A4"));
+		Assertions.assertEquals(Duration.ofMillis(5), getFieldValue(target, "A_B_D1"));
+		Assertions.assertEquals(Duration.ofMillis(5000), getFieldValue(target, "A_B_D2"));
+		Assertions.assertEquals(Duration.ofMillis(300_000), getFieldValue(target, "A_B_D3"));
+		Assertions.assertEquals(Duration.ofMillis(18_000_000), getFieldValue(target, "A_B_D4"));
+		Assertions.assertEquals(Duration.ofMillis(432_000_000), getFieldValue(target, "A_B_D5"));
 	}
 	
-	@Test(expected=MissingConfigPropertyException.class)
+	@Test
 	public void extractPropertiesMissingConfigPropertyExceptionTest()
 	{
-		ConfigPropertyBinder.create(new SimpleConfigPropertyAdapter(new HashMap<String, String>()), TestObjectFail1.class).bind();
+		Assertions.assertThrows(
+			MissingConfigPropertyException.class,
+			() -> ConfigPropertyBinder.create(new SimpleConfigPropertyAdapter(new HashMap<String, String>()), TestObjectFail1.class).bind()
+		);
 	}
 	
-	@Test(expected=ConfigPropertyException.class)
+	@Test
 	public void extractPropertiesConfigPropertyExceptionNoConfigPropertyAdapterClassTest()
 	{
-		 ConfigPropertyBinder.create(TestObjectFail2.class).bind();
+		Assertions.assertThrows(
+			ConfigPropertyException.class,
+			() -> ConfigPropertyBinder.create(TestObjectFail2.class).bind()
+		);
 	}
 	
-	@Test(expected=ConfigPropertyException.class)
+	@Test
 	public void extractPropertiesConfigPropertyExceptionNoConfigPropertiesAnnotationTest()
 	{
-		ConfigPropertyBinder.create(TestObjectFail3.class).bind();
+		Assertions.assertThrows(
+			ConfigPropertyException.class,
+			() -> ConfigPropertyBinder.create(TestObjectFail3.class).bind()
+		);
 	}
 	
-	@Test(expected=IllegalStateException.class)
+	@Test
 	public void extractPropertiesIllegalStateExceptionTest()
 	{
-		ConfigPropertyBinder.create(new SimpleConfigPropertyAdapter(new HashMap<String, String>()), TestObjectFail4.class).bind();
+		Assertions.assertThrows(
+			IllegalStateException.class,
+			() -> ConfigPropertyBinder.create(new SimpleConfigPropertyAdapter(new HashMap<String, String>()), TestObjectFail4.class).bind()
+		);
 	}
 	
-	@ConfigProperties(prefix = "prefix")
-	private static class TestObject
+	private Object getFieldValue(Class<?> target, String field) throws Exception
 	{
-		@ConfigProperty(defaultValue = "test1 default")
-		public static final String A_B_S1 = null;
-
-		@ConfigProperty
-		public static final String A_B_S2 = null;
-
-		@ConfigProperty(nullable = true)
-		public static final String A_B_S3 = null;
-		
-		@ConfigProperty(nullable = true)
-		public static final String A_B_S4 = null;
-		
-		@ConfigProperty(nullable = true, defaultValue="test5 default")
-		public static final String A_B_S5 = null;
-
-		@ConfigProperty(defaultValue = "test6 default")
-		public static final String A_B_S6 = null;
-
-		@ConfigProperty(prefix="prefix2")
-		public static final String A_B_S7 = null;
-
-		public static final String A_B_S8 = null;
-
-		@ConfigProperty
-		public static final Long A_B_L1 = null;
-		
-		@ConfigProperty
-		public static final Integer A_B_I1 = null;
-		
-		@ConfigProperty
-		public static final Boolean A_B_B1 = null;
-		
-		@ConfigProperty
-		public static final String[] A_B_A1 = null;
-		
-		@ConfigProperty(separator="\\s*;\\s*", trim=true)
-		public static final String[] A_B_A2 = null;
-		
-		@ConfigProperty
-		public static final Integer[] A_B_A3 = null;
-		
-		@ConfigProperty
-		public static final long[] A_B_A4 = null;
-	}
-
-	@ConfigProperties(prefix = "prefix")
-	private static class TestObjectNotFinal
-	{
-		@ConfigProperty(defaultValue = "test1 default")
-		public static String A_B_S1;
-
-		@ConfigProperty
-		public static String A_B_S2;
-
-		@ConfigProperty(nullable = true)
-		public static String A_B_S3;
-		
-		@ConfigProperty(nullable = true)
-		public static String A_B_S4;
-		
-		@ConfigProperty(nullable = true, defaultValue="test5 default")
-		public static String A_B_S5;
-
-		@ConfigProperty(defaultValue = "test6 default")
-		public static String A_B_S6;
-
-		@ConfigProperty(prefix="prefix2")
-		public static String A_B_S7;
-
-		public static String A_B_S8;
-
-		@ConfigProperty
-		public static Long A_B_L1;
-		
-		@ConfigProperty
-		public static Integer A_B_I1;
-		
-		@ConfigProperty
-		public static Boolean A_B_B1;
-		
-		@ConfigProperty
-		public static String[] A_B_A1;
-		
-		@ConfigProperty(separator="\\s*;\\s*", trim=true)
-		public static String[] A_B_A2;
-		
-		@ConfigProperty
-		public static Integer[] A_B_A3;
-		
-		@ConfigProperty
-		public static long[] A_B_A4;
-	}
-	
-	@ConfigProperties(prefix = "prefix")
-	private static class TestObjectFail1
-	{
-		@ConfigProperty
-		public static final String A_B_S1 = null;
-	}
-	
-	@ConfigProperties(prefix = "prefix")
-	private static class TestObjectFail2
-	{
-		@ConfigProperty
-		public static final String A_B_S1 = null;
-	}
-
-	private static class TestObjectFail3
-	{
-		@ConfigProperty
-		public static final String A_B_S1 = null;
-	}
-	
-	@ConfigProperties(prefix = "prefix")
-	private static class TestObjectFail4
-	{
-		@ConfigProperty
-		public static final String A_B_S1 = "test";
+		return target.getField(field).get(null);
 	}
 }

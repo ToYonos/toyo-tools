@@ -18,6 +18,11 @@ public @interface ConfigProperty
 	 * @return the default value of the property if not properly set
 	 */
     String defaultValue() default "";
+
+    /**
+     * @return if the property is an array, the default value of the property if not properly set
+     */
+    String[] defaultListValue() default {};
     
     /**
      * @return true if the property can be null, false otherwise
@@ -28,11 +33,6 @@ public @interface ConfigProperty
      * @return the prefix to add for this <code>&#064;ConfigProperty</code>, override the one in <code>&#064;ConfigProperties</code> if defined
      */
     String prefix() default "";
-    
-    /**
-     * @return the separator used to split the property value if the field is an <code>Array</code> 
-     */
-    String separator() default ",";
     
     /**
      * @return true if the property value has to be trimmed, false otherwise 

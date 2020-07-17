@@ -1,5 +1,7 @@
 package info.toyonos.config.adapter;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import info.toyonos.config.ConfigPropertyAdapter;
@@ -17,10 +19,16 @@ public class SimpleConfigPropertyAdapter implements ConfigPropertyAdapter
 	{
 		this.properties = properties;
 	}
+	
+	@Override
+	public String getProperty(Class<?> source, String prefix, String property)
+	{
+		return properties.get(String.format("%s.%s", prefix, property));
+	}
 
 	@Override
-	public String getProperty(String key)
+	public List<String> getPropertyAsList(Class<?> source, String prefix, String property)
 	{
-		return properties.get(key);
+		return Arrays.asList(properties.get(String.format("%s.%s", prefix, property)).split(";"));
 	}
 }
