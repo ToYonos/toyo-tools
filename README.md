@@ -15,7 +15,7 @@ myapp.db.username=user
 myapp.db.password=passw0rd
 myapp.db.connection.timeout=180
 
-myapp.supported.currencies=usd,eur,gbp
+myapp.supported.currencies=usd;eur;gbp
 ```
 
 Now, let's map this file in a class :
