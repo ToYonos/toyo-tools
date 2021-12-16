@@ -1,4 +1,4 @@
-package info.toyonos;
+package info.toyonos.config;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -12,9 +12,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import info.toyonos.config.ConfigPropertyBinder;
-import info.toyonos.config.ConfigPropertyException;
-import info.toyonos.config.MissingConfigPropertyException;
 import info.toyonos.config.adapter.SimpleConfigPropertyAdapter;
 
 @TestMethodOrder(OrderAnnotation.class)

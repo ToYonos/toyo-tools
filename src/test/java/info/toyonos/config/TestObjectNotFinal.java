@@ -1,9 +1,6 @@
-package info.toyonos;
+package info.toyonos.config;
 
 import java.time.Duration;
-
-import info.toyonos.config.ConfigProperties;
-import info.toyonos.config.ConfigProperty;
 
 @ConfigProperties(prefix = "prefix")
 public class TestObjectNotFinal

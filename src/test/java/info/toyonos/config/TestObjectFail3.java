@@ -1,6 +1,4 @@
-package info.toyonos;
-
-import info.toyonos.config.ConfigProperty;
+package info.toyonos.config;
 
 public class TestObjectFail3
 {

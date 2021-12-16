@@ -1,8 +1,4 @@
-package info.toyonos;
-
-
-import info.toyonos.config.ConfigProperties;
-import info.toyonos.config.ConfigProperty;
+package info.toyonos.config;
 
 @ConfigProperties(prefix = "prefix")
 public class TestObjectFail1
