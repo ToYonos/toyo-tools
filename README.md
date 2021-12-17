@@ -65,4 +65,65 @@ public class Foo
 
 A `ConfigPropertyAdapter` instance is necessary in order to properly associate your configuration. Some simple adapters are provided but you can off course implement yours.  
 
+### SafeNavigationWrapper
+
+As Java does not possess a Safe Navigation Operator like [Groovy](https://groovy-lang.org/operators.html#_safe_navigation_operator), this wrapper class allows to emulate this behavior using Functional Interface in order to keep compilation integrity.
+
+Let's take as an example this `Parent` class
+
+```java
+public class Parent
+{
+	private String name;
+	private Parent child;
+	
+	public Parent(String name, Parent child)
+	{
+		this.name = name;
+		this.child = child;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public Parent getChild()
+	{
+		return child;
+	}
+
+	@Override
+	public String toString()
+	{
+		return name;
+	}
+}
+```
+
+Usage :
+
+```java
+import static info.toyonos.util.SafeNavigationWrapper.$;
+
+Parent me = new Parent("ToYonos", null);
+Parent father = new Parent("My father", me);
+Parent grandfather = new Parent("My grandfather", father);
+
+// Trying to display everyone's grandchild
+
+System.out.println($(me).$(Parent::getChild).$(Parent::getChild).get()); // null, no grandchild
+System.out.println($(father).$(Parent::getChild).$(Parent::getChild).get()); // null, no grandchild
+System.out.println($(grandfather).$(Parent::getChild).$(Parent::getChild).get()); // ToYonos
+```
+It's slightly more compact and avoid the ternary operator usage
+
+```java
+// SafeNavigationWrapper way 
+Parent grandchild = $(grandfather).$(Parent::getChild).$(Parent::getChild).get();
+   
+// Regular way
+Parent grandchild = grandfather != null && grandfather.getChild() != null ? grandfather.getChild().getChild() : null;
+```
+
 For more details, please check the javadoc. 
