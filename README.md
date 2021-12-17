@@ -69,6 +69,8 @@ A `ConfigPropertyAdapter` instance is necessary in order to properly associate y
 
 As Java does not possess a Safe Navigation Operator like [Groovy](https://groovy-lang.org/operators.html#_safe_navigation_operator), this wrapper class allows to emulate this behavior using Functional Interface in order to keep compilation integrity.
 
+It's based on the Java 8 `Optional` class. The main advantage here is that your code does not need to have `Optional` everywhere an object can be null. The `SafeNavigationWrapper` wraps it up for you.
+
 Let's take as an example this `Parent` class
 
 ```java
