@@ -21,13 +21,13 @@ import java.util.function.Function;
  *    }
  * }
  * 
- * Parent grandFather = ...;
+ * Parent grandfather = ...;
  * 
  * // SafeNavigationWrapper way 
- * Parent grandChild = $(grandFather).$(Parent::getChild).$(Parent::getChild).get();
+ * Parent grandchild = $(grandfather).$(Parent::getChild).$(Parent::getChild).get();
  *  
  * // Regular way
- * Parent grandChild = grandFather != null && grandFather.getChild() != null ? grandFather.getChild().getChild() : null;
+ * Parent grandchild = grandfather != null && grandfather.getChild() != null ? grandfather.getChild().getChild() : null;
  *  
  * </pre>
  * 
